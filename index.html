@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ShafiqKhairy Panel - Pterodactyl Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0a;
+            font-family: 'Segoe UI', 'Fira Code', monospace;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .panel-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff9d;
+        }
+        .logo h1 {
+            color: #00ff9d;
+            font-size: 20px;
+        }
+        .logo p {
+            color: #888;
+            font-size: 10px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .node-version select {
+            background: #1a1a1a;
+            color: #00ff9d;
+            border: 1px solid #333;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            cursor: pointer;
+        }
+        .btn {
+            background: #00ff9d;
+            color: #0a0a0a;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-danger {
+            background: #ff4757;
+            color: white;
+        }
+        .btn:hover {
+            transform: scale(1.02);
+        }
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            padding: 15px;
+            gap: 15px;
+        }
+        .file-explorer {
+            width: 280px;
+            background: #111;
+            border-radius: 12px;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .explorer-header {
+            background: #1a1a1a;
+            padding: 12px;
+            border-bottom: 1px solid #222;
+            color: #00ff9d;
+            display: flex;
+            justify-content: space-between;
+        }
+        .file-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .file-item {
+            padding: 8px 12px;
+            margin: 2px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ccc;
+            font-size: 13px;
+        }
+        .file-item:hover {
+            background: #1e1e1e;
+        }
+        .file-item.active {
+            background: #2a2a2a;
+            border-left: 3px solid #00ff9d;
+            color: #00ff9d;
+        }
+        .file-actions {
+            margin-left: auto;
+            display: none;
+            gap: 8px;
+        }
+        .file-item:hover .file-actions {
+            display: flex;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .editor-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow: hidden;
+        }
+        .editor-header {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #222;
+        }
+        .filename {
+            color: #00ff9d;
+            font-family: monospace;
+        }
+        textarea {
+            flex: 1;
+            background: #0a0a0a;
+            color: #00ff9d;
+            border: 1px solid #222;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            border-radius: 12px;
+        }
+        .console-area {
+            height: 280px;
+            background: #111;
+            border-radius: 12px;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+        }
+        .console-header {
+            background: #1a1a1a;
+            padding: 8px 15px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 12px;
+        }
+        .console-output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .console-line {
+            padding: 2px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .console-stdout { color: #00ff9d; }
+        .console-stderr { color: #ff4757; }
+        .console-input { color: #ffd93d; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #00ff9d; border-radius: 4px; }
+        @media (max-width: 900px) {
+            .main { flex-direction: column; }
+            .file-explorer { width: 100%; height: 200px; }
+            .controls { gap: 8px; }
+            .btn { padding: 4px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="header">
+            <div class="logo">
+                <h1>⚡ ShafiqKhairy Panel</h1>
+                <p>Pterodactyl Style • Node.js Runner</p>
+            </div>
+            <div class="controls">
+                <div class="node-version">
+                    <select id="nodeVersion">
+                        <option value="18">Node 18 LTS</option>
+                        <option value="20" selected>Node 20 LTS</option>
+                        <option value="22">Node 22 (Latest)</option>
+                        <option value="16">Node 16 (Legacy)</option>
+                    </select>
+                </div>
+                <button class="btn" id="runBtn">▶ RUN</button>
+                <button class="btn btn-danger" id="stopBtn">⏹ STOP</button>
+                <button class="btn" id="newFileBtn">📄 New</button>
+                <button class="btn" id="uploadBtn">📤 Upload</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="file-explorer">
+                <div class="explorer-header">
+                    <span>📁 FILES</span>
+                    <button class="btn" id="refreshFiles" style="padding:2px 8px; font-size:10px;">⟳</button>
+                </div>
+                <div class="file-list" id="fileList"></div>
+            </div>
+
+            <div class="editor-area">
+                <div class="editor-header">
+                    <span class="filename" id="currentFile">app.js</span>
+                    <button class="btn" id="saveBtn" style="padding:4px 12px;">💾 Save</button>
+                </div>
+                <textarea id="editor" placeholder="// Write your Node.js code here..."></textarea>
+            </div>
+
+            <div class="console-area">
+                <div class="console-header">
+                    <span>📟 CONSOLE OUTPUT</span>
+                    <button class="btn" id="clearConsoleBtn" style="padding:2px 8px;">Clear</button>
+                </div>
+                <div class="console-output" id="consoleOutput">
+                    <div class="console-line console-input">> Panel ready!</div>
+                    <div class="console-line console-input">> Select Node version and click RUN</div>
+                    <div class="console-line console-input">> Ctrl+S to save, Ctrl+Enter to run</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== STATE ==========
+        let currentFile = 'app.js';
+        let runningProcess = null;
+        
+        // Default files
+        let files = {
+            'app.js': `// ShafiqKhairy Panel - Node.js Runner
+console.log('🚀 Panel is running!');
+console.log('Node version: ' + process.version);
+console.log('Platform: ' + process.platform);
+
+// Example HTTP server
+const http = require('http');
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello from ShafiqKhairy Panel!\\n');
+});
+
+server.listen(3000, () => {
+    console.log('✅ Server running on http://localhost:3000');
+});`,
+            'package.json': `{
+  "name": "shafiqkhairy-panel",
+  "version": "1.0.0",
+  "description": "Node.js Runner Panel",
+  "main": "app.js"
+}`
+        };
+
+        // ========== CONSOLE ==========
+        function addConsoleLine(text, type = 'stdout') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            if (!consoleOutput) return;
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            line.textContent = text;
+            consoleOutput.appendChild(line);
+            line.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        function clearConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            consoleOutput.innerHTML = '';
+            addConsoleLine('Console cleared', 'input');
+        }
+
+        // ========== FILE MANAGEMENT ==========
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            Object.keys(files).forEach(filename => {
+                const div = document.createElement('div');
+                div.className = `file-item ${currentFile === filename ? 'active' : ''}`;
+                div.innerHTML = `
+                    <span>📄</span>
+                    <span>${filename}</span>
+                    <div class="file-actions">
+                        <button class="delete-btn" onclick="deleteFile('${filename}')">🗑</button>
+                    </div>
+                `;
+                div.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON') openFile(filename);
+                };
+                fileList.appendChild(div);
+            });
+        }
+
+        function openFile(filename) {
+            currentFile = filename;
+            document.getElementById('editor').value = files[filename] || '';
+            document.getElementById('currentFile').innerText = filename;
+            renderFileList();
+        }
+
+        function saveCurrentFile() {
+            files[currentFile] = document.getElementById('editor').value;
+            addConsoleLine(`✅ Saved: ${currentFile}`, 'stdout');
+            renderFileList();
+        }
+
+        function deleteFile(filename) {
+            if (filename === 'app.js') {
+                addConsoleLine('❌ Cannot delete app.js', 'stderr');
+                return;
+            }
+            if (confirm(`Delete ${filename}?`)) {
+                delete files[filename];
+                if (currentFile === filename) openFile('app.js');
+                renderFileList();
+                addConsoleLine(`🗑 Deleted: ${filename}`, 'stdout');
+            }
+        }
+
+        function createNewFile() {
+            const name = prompt('Enter filename (must end with .js or .json):', 'newfile.js');
+            if (!name) return;
+            if (!name.endsWith('.js') && !name.endsWith('.json')) {
+                addConsoleLine('❌ File must end with .js or .json', 'stderr');
+                return;
+            }
+            if (files[name]) {
+                addConsoleLine(`❌ File ${name} already exists`, 'stderr');
+                return;
+            }
+            files[name] = name.endsWith('.js') ? '// New file\nconsole.log("Hello!");' : '{}';
+            openFile(name);
+            addConsoleLine(`📄 Created: ${name}`, 'stdout');
+        }
+
+        function uploadFile() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    files[file.name] = e.target.result;
+                    openFile(file.name);
+                    addConsoleLine(`📤 Uploaded: ${file.name}`, 'stdout');
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // ========== RUN NODE.JS ==========
+        async function runCode() {
+            if (runningProcess) {
+                addConsoleLine('⚠️ Process already running. Stop it first.', 'stderr');
+                return;
+            }
+
+            const code = document.getElementById('editor').value;
+            const nodeVersion = document.getElementById('nodeVersion').value;
+
+            addConsoleLine(`\n🚀 Running code with Node v${nodeVersion}...`, 'input');
+            addConsoleLine('─'.repeat(50), 'input');
+
+            try {
+                const workerCode = `
+                    const output = [];
+                    const originalLog = console.log;
+                    const originalError = console.error;
+                    
+                    console.log = (...args) => {
+                        const msg = args.map(a => String(a)).join(' ');
+                        output.push({ type: 'stdout', data: msg });
+                        originalLog(...args);
+                    };
+                    console.error = (...args) => {
+                        const msg = args.map(a => String(a)).join(' ');
+                        output.push({ type: 'stderr', data: msg });
+                        originalError(...args);
+                    };
+                    
+                    try {
+                        ${code}
+                        postMessage({ type: 'done', output });
+                    } catch(e) {
+                        postMessage({ type: 'error', error: e.message, stack: e.stack, output });
+                    }
+                `;
+
+                const blob = new Blob([workerCode], { type: 'application/javascript' });
+                const worker = new Worker(URL.createObjectURL(blob));
+                
+                runningProcess = { worker };
+                
+                worker.onmessage = (e) => {
+                    const data = e.data;
+                    if (data.type === 'done') {
+                        data.output.forEach(line => addConsoleLine(line.data, line.type));
+                        addConsoleLine(`\n✅ Process finished`, 'stdout');
+                    } else if (data.type === 'error') {
+                        addConsoleLine(`❌ Error: ${data.error}`, 'stderr');
+                        if (data.stack) addConsoleLine(data.stack, 'stderr');
+                    }
+                    runningProcess = null;
+                    worker.terminate();
+                };
+                
+                worker.onerror = (e) => {
+                    addConsoleLine(`❌ Worker error: ${e.message}`, 'stderr');
+                    runningProcess = null;
+                    worker.terminate();
+                };
+                
+            } catch (error) {
+                addConsoleLine(`❌ Failed to run: ${error.message}`, 'stderr');
+                runningProcess = null;
+            }
+        }
+
+        function stopProcess() {
+            if (runningProcess) {
+                runningProcess.worker?.terminate();
+                runningProcess = null;
+                addConsoleLine('⏹ Process stopped', 'stderr');
+            } else {
+                addConsoleLine('No process running', 'stderr');
+            }
+        }
+
+        // ========== EVENT LISTENERS ==========
+        document.getElementById('runBtn').onclick = runCode;
+        document.getElementById('stopBtn').onclick = stopProcess;
+        document.getElementById('saveBtn').onclick = saveCurrentFile;
+        document.getElementById('newFileBtn').onclick = createNewFile;
+        document.getElementById('uploadBtn').onclick = uploadFile;
+        document.getElementById('refreshFiles').onclick = renderFileList;
+        document.getElementById('clearConsoleBtn').onclick = clearConsole;
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveCurrentFile();
+            }
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                runCode();
+            }
+        });
+
+        window.deleteFile = deleteFile;
+
+        // ========== INIT ==========
+        renderFileList();
+        openFile('app.js');
+    </script>
+</body>
+</html>
